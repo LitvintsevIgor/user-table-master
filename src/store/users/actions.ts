@@ -1,5 +1,6 @@
-import { createAction } from '@reduxjs/toolkit'
+import { createAction } from '@reduxjs/toolkit';
 
-import { IUser } from '../../models'
+import { IUser } from '../../models';
 
-export const setUsers = createAction<IUser[]>('users.setReady')
+export const setUsers = createAction<IUser[]>('users.setReady');
+export const deleteUser = createAction<string>('users.deleteUser');
