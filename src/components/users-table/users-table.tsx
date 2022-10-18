@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import ResizeObserver from 'rc-resize-observer';
-import { Image, Table, TableColumnsType } from 'antd';
+import { Image, Table, TableColumnsType, Modal, Form } from 'antd';
 import { IUser } from '../../models';
 import { IUsersTableProps } from './types';
 import { RegisteredRenderer } from './registered-renderer';
+import { UserEditingForm } from './user-editing-form';
 
 import './users-table.less';
 
 export const UsersTable = ({ loading, users }: IUsersTableProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [height, setTableHeight] = useState(undefined);
+
+  const openModal = useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
 
   const heighDelta = 39; // 39 - высота заголовка таблицы
   return (
@@ -26,8 +32,18 @@ export const UsersTable = ({ loading, users }: IUsersTableProps) => {
           scroll={{ y: height }}
           pagination={false}
           rowKey={keySelector}
-          onRow={(user) => ({ onDoubleClick: () => console.log(user) })}
+          onRow={(user) => ({ onDoubleClick: () => openModal() })}
         />
+        <Modal
+          title='Edit user'
+          centered
+          footer={null}
+          visible={isModalOpen}
+          onOk={() => setIsModalOpen(false)}
+          onCancel={() => setIsModalOpen(false)}
+        >
+          <UserEditingForm />
+        </Modal>
       </div>
     </ResizeObserver>
   );
