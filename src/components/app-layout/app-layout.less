@@ -1,0 +1,31 @@
+@import '~antd/lib/style/variable.less';
+
+.app-layout {
+  height: 100%;
+
+  > .app-layout-header .logo {
+    float: left;
+    width: 120px;
+    height: 31px;
+
+    margin: 16px 24px 16px 0;
+
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .app-layout-sider {
+    border-right: @border-width-base solid @border-color-base;
+    background-color: tomato;
+  }
+
+  .app-layout-content {
+    min-height: 280px;
+    overflow: hidden;
+    
+    background: #fff;
+  }
+
+  > .app-layout-footer {
+    text-align: center;
+  }
+}
