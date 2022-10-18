@@ -11,9 +11,11 @@ import './users-table.less';
 export const UsersTable = ({ loading, users }: IUsersTableProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [height, setTableHeight] = useState(undefined);
+  const [currentUser, setCurrentUser] = useState(undefined);
 
-  const openModal = useCallback(() => {
+  const openModal = useCallback((user: IUser) => {
     setIsModalOpen(true);
+    setCurrentUser(user);
   }, []);
 
   const heighDelta = 39; // 39 - высота заголовка таблицы
@@ -32,7 +34,7 @@ export const UsersTable = ({ loading, users }: IUsersTableProps) => {
           scroll={{ y: height }}
           pagination={false}
           rowKey={keySelector}
-          onRow={(user) => ({ onDoubleClick: () => openModal() })}
+          onRow={(user) => ({ onDoubleClick: () => openModal(user) })}
         />
         <Modal
           title='Edit user'
@@ -41,8 +43,9 @@ export const UsersTable = ({ loading, users }: IUsersTableProps) => {
           visible={isModalOpen}
           onOk={() => setIsModalOpen(false)}
           onCancel={() => setIsModalOpen(false)}
+          destroyOnClose
         >
-          <UserEditingForm />
+          <UserEditingForm user={currentUser} />
         </Modal>
       </div>
     </ResizeObserver>

@@ -1,25 +1,40 @@
 import React from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, DatePicker } from 'antd';
 import {
   UserOutlined,
   MailOutlined,
   PhoneOutlined,
   MobileOutlined,
-  GiftOutlined,
 } from '@ant-design/icons';
+import moment from 'moment';
 
-export const UserEditingForm = () => {
-  const [form] = Form.useForm();
+const dateFormat = 'DD.MM.YYYY';
 
+import { IUser } from '../../models';
+
+interface UserEditingFormProps {
+  user: IUser;
+}
+
+export const UserEditingForm = ({ user }: UserEditingFormProps) => {
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
-    form.resetFields();
   };
 
   return (
-    <Form form={form} initialValues={{ remember: true }} onFinish={onFinish}>
+    <Form
+      initialValues={{
+        name: user.login.username,
+        email: user.email,
+        phone: user.phone,
+        cell: user.cell,
+        dob: moment(user.dob.date),
+      }}
+      onFinish={onFinish}
+    >
       <Form.Item
         name='name'
+        label='Name'
         rules={[{ required: true, message: 'Please input your name!' }]}
       >
         <Input
@@ -28,6 +43,7 @@ export const UserEditingForm = () => {
         />
       </Form.Item>
       <Form.Item
+        label='Email'
         name='email'
         rules={[{ required: true, message: 'Please input your email!' }]}
       >
@@ -38,16 +54,17 @@ export const UserEditingForm = () => {
       </Form.Item>
       <Form.Item>
         <Form.Item
+          label='Phone'
           name='phone'
           rules={[{ required: true, message: 'Please input your phone!' }]}
         >
           <Input
             prefix={<PhoneOutlined className='site-form-item-icon' />}
-            type='password'
             placeholder='Phone'
           />
         </Form.Item>
         <Form.Item
+          label='Cell'
           name='cell'
           rules={[{ required: true, message: 'Please input your cell!' }]}
         >
@@ -58,17 +75,19 @@ export const UserEditingForm = () => {
         </Form.Item>
         <Form.Item
           name='dob'
+          label='Date of birth'
           rules={[
-            { required: true, message: 'Please input your date of birth!' },
+            {
+              type: 'object' as const,
+              required: true,
+              message: 'Please select your date of birth!',
+            },
           ]}
         >
-          <Input
-            prefix={<GiftOutlined className='site-form-item-icon' />}
-            placeholder='Date of birth'
-          />
+          <DatePicker format={dateFormat} />
         </Form.Item>
         <Button type='primary' htmlType='submit' className='login-form-button'>
-          Save
+          Сохранить
         </Button>
       </Form.Item>
     </Form>
