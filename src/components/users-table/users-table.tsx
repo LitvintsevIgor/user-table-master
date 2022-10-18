@@ -1,36 +1,11 @@
 import React, { useState } from 'react';
 import ResizeObserver from 'rc-resize-observer';
-import { Image, Table, TableColumnsType, Button } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
-
-import dayjs from 'dayjs';
-
+import { Image, Table, TableColumnsType } from 'antd';
 import { IUser } from '../../models';
 import { IUsersTableProps } from './types';
+import { RegisteredRenderer } from './registered-renderer';
 
 import './users-table.less';
-import { useAppDispatch } from './../../store';
-import { deleteUser } from './../../store/users/actions';
-
-interface RegisteredRendererProps {
-  date: string;
-  id: string;
-}
-
-const RegisteredRenderer = ({ date, id }: RegisteredRendererProps) => {
-  const dispatch = useAppDispatch();
-
-  return (
-    <div className='registered'>
-      {dayjs(date).format('D MMMM YYYY ')}
-      <Button
-        shape='circle'
-        icon={<DeleteOutlined />}
-        onClick={() => dispatch(deleteUser(id))}
-      />
-    </div>
-  );
-};
 
 export const UsersTable = ({ loading, users }: IUsersTableProps) => {
   const [height, setTableHeight] = useState(undefined);
