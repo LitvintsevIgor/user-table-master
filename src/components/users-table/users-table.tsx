@@ -64,9 +64,7 @@ export const UsersTable = React.memo(({ loading, users }: IUsersTableProps) => {
           scroll={{ y: height }}
           pagination={false}
           rowKey={keySelector}
-          onRow={(user) => ({
-            onDoubleClick: useCallback(() => openModal(user), []),
-          })}
+          onRow={(user) => ({ onDoubleClick: () => openModal(user) })}
         />
         <Modal
           title='Edit user'
