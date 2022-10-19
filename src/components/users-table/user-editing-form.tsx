@@ -14,11 +14,12 @@ import { IUser } from '../../models';
 
 interface UserEditingFormProps {
   user: IUser;
+  onSave: (values: any) => void;
 }
 
-export const UserEditingForm = ({ user }: UserEditingFormProps) => {
+export const UserEditingForm = ({ user, onSave }: UserEditingFormProps) => {
   const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
+    onSave(values);
   };
 
   return (

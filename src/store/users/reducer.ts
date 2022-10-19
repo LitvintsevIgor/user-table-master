@@ -3,7 +3,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { IUsersState } from './types';
 
 import { generate, add } from './thunks';
-import { deleteUser } from './actions';
+import { deleteUser, setUser } from './actions';
 
 const initialState: IUsersState = {
   fetching: false,
@@ -36,5 +36,11 @@ export const usersReducer = createReducer(initialState, (builder) =>
     .addCase(deleteUser, (state, { payload }) => ({
       ...state,
       users: state.users.filter((user) => user.login.uuid !== payload),
+    }))
+    .addCase(setUser, (state, { payload }) => ({
+      ...state,
+      users: state.users.map((user) =>
+        user.login.uuid === payload.login.uuid ? payload : user
+      ),
     }))
 );
