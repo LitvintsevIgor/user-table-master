@@ -43,6 +43,7 @@ export const UsersTable = React.memo(({ loading, users }: IUsersTableProps) => {
       newUser.phone = values.phone;
       newUser.cell = values.cell;
       newUser.dob.date = moment(values.dob).format();
+      newUser.dob.age = moment(moment()).diff(values.dob, 'years');
       dispatch(setUser(newUser));
     }
   }, []);
